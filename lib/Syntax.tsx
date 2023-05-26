@@ -6,13 +6,18 @@ import React from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import sunburst from "react-syntax-highlighter/dist/esm/styles/hljs/sunburst";
+import styled from "styled-components";
 
 SyntaxHighlighter.registerLanguage("javascript", js);
 
+const StyledSyntaxHighlighter = styled(SyntaxHighlighter)`
+  flex: auto;
+`;
+
 export default function SyntaxText({ src = "", ...opts }: { src: string }) {
   return (
-    <SyntaxHighlighter style={sunburst} {...opts}>
+    <StyledSyntaxHighlighter style={sunburst} {...opts}>
       {src}
-    </SyntaxHighlighter>
+    </StyledSyntaxHighlighter>
   );
 }
