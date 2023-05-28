@@ -1,0 +1,76 @@
+.box-with-arrows {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1em;
+}
+
+.arrows-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-in {
+  justify-content: end;
+}
+
+.arrow-line {
+  position: relative;
+  width: 20px;
+  height: 2px;
+  background-color: black;
+  margin-right: 6px;
+}
+
+.arrow-line:before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid black;
+}
+
+.arrow-label {
+  flex: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  margin: 5px 0px;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.white .arrow-line {
+  background-color: white;
+}
+
+.white .arrow-line:before {
+  border-left-color: white;
+}
+
+.white .arrow-label {
+  background-color: white;
+}
+
+.box {
+  border: 2px solid black;
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -4,7 +4,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { Table } from "@mui/material";
+import { Input, Table } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Row } from "@dwidge/react-lib/utils/csv";
+import { upsert } from "@dwidge/react-lib/utils/upsert";
 
 const firstKey = (o: object = {}) => Object.keys(o)[0];
 
@@ -28,35 +29,62 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export default function BasicTable({
   rows = [],
   keyCol = firstKey(rows[0]),
+  showCol = Object.keys(rows[0] ?? {}).slice(1),
+  onChange,
   ...opts
 }: {
   rows: Row[];
   keyCol?: string;
+  showCol?: string[];
+  onChange?: (rows: Row[]) => void;
 }) {
   if (!rows.length) return <></>;
-  const cols = Object.keys(rows[0]);
+
+  const cols: [col: string, align: "left" | "right"][] = showCol.map(
+    (col, i) => [
+      col,
+      i > 0 && rows.some((row) => ["number"].includes(typeof row[col]))
+        ? "right"
+        : "left",
+    ]
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table {...opts}>
         <TableHead>
           <TableRow>
-            {cols.map((col) => (
-              <StyledTableCell key={col}>{col}</StyledTableCell>
+            {cols.map(([col, align]) => (
+              <StyledTableCell key={col} align={align}>
+                {col}
+              </StyledTableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row[keyCol]}
+              key={row[keyCol] ?? Math.random()}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              {cols.map((col) => (
-                <TableCell
-                  key={col}
-                  align={typeof row[col] === "number" ? "right" : "left"}
-                >
-                  {row[col]}
+              {cols.map(([col, align]) => (
+                <TableCell key={col} align={align}>
+                  {row[col] != null && onChange ? (
+                    <Input
+                      sx={{ input: { textAlign: align } }}
+                      value={row[col]}
+                      onChange={(e) => {
+                        onChange(
+                          upsert(rows, (r) => row[keyCol] === r[keyCol], {
+                            ...row,
+                            [col]: e.target.value,
+                          })
+                        );
+                      }}
+                    />
+                  ) : (
+                    row[col]
+                  )}
                 </TableCell>
               ))}
             </TableRow>

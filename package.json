@@ -12,7 +12,7 @@
     "dev": "servey src=src/index.tsx env=REACT_APP_ dir=public port=3000",
     "build": "buildy src=src/index.tsx env=REACT_APP_ dir=public out=build",
     "start": "pnpx http-server build -o -p3000",
-    "test": "jest"
+    "test": "buildy src=lib/utils/test.js out=build && node build/test.js"
   },
   "keywords": [],
   "author": "DWJ",
