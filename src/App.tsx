@@ -25,16 +25,41 @@ const App: React.FC<{}> = () => {
     { id: "1", colA: "A1", colB: "B1" },
     { id: "2", colA: "A2", colB: "B2" },
   ]);
+  const [cc] = useState("grey");
   return (
     <ThemeProvider theme={theme}>
       <Background>
         <Foreground>
+          <div
+            className="aa"
+            style={{
+              ["--colorr" as string]: cc,
+              ["--color-bg" as string]: "yellow",
+            }}
+          >
+            css variables
+          </div>
           <LogicGate
+            colours={{ off: "red", on: "blue", 0: "green" }}
             table={[
-              { a: 0, bbbbb: 0, "or.": 0, "xor.": 0, "and.": 0, "nand.": 1 },
-              { a: 1, bbbbb: 0, "or.": 1, "xor.": 1, "and.": 0, "nand.": 1 },
-              { a: 0, bbbbb: 1, "or.": 1, "xor.": 1, "and.": 0, "nand.": 1 },
-              { a: 1, bbbbb: 1, "or.": 1, "xor.": 0, "and.": 1, "nand.": 0 },
+              {
+                a: "off",
+                bbbbb: 0,
+                "or.": 0,
+                "xor.": 0,
+                "and.": 0,
+                "nand.": 1,
+              },
+              { a: "on", bbbbb: 0, "or.": 1, "xor.": 1, "and.": 0, "nand.": 1 },
+              {
+                a: "off",
+                bbbbb: 1,
+                "or.": 1,
+                "xor.": 1,
+                "and.": 0,
+                "nand.": 1,
+              },
+              { a: "on", bbbbb: 1, "or.": 1, "xor.": 0, "and.": 1, "nand.": 0 },
             ]}
           >
             LogicGate

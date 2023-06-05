@@ -23,3 +23,8 @@ body {
 #root {
   background: silver;
 }
+
+.aa {
+  background: var(--colorr, blue);
+  border: 2px solid var(--color-bg);
+}
