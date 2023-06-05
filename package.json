@@ -1,6 +1,6 @@
 {
   "name": "@dwidge/mui-lib",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "exports": {
     "./*": "./lib/*.tsx"
